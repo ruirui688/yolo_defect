@@ -1,0 +1,37 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.nox/
+.tox/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# Local secrets and environment files
+.env
+.env.*
+
+# Raw data and generated datasets
+raw_data/
+output/
+
+# Local training outputs and downloaded base weights
+code/yolo_defect_framework/runs/
+code/yolo_defect_framework/*.pt
+*.cache
+
+# Logs
+*.log
+

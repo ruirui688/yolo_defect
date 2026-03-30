@@ -1,0 +1,15 @@
+target_classes:
+  - FiberNep
+  - FabricExposed
+crop_size: 1536
+context_scale: 6.0
+min_visible_fraction: 0.35
+min_box_size_px: 6
+copies_per_object: 2
+jitter_ratio: 0.08
+brightness_factors:
+  - 0.92
+  - 1.08
+contrast_factors:
+  - 0.95
+  - 1.05

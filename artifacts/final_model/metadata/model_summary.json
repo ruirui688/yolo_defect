@@ -1,0 +1,97 @@
+{
+  "project_name": "defect-detection-yolo-project",
+  "task": "object-detection",
+  "framework": "Ultralytics YOLO",
+  "run_name": "defect_yolov8m_1536_detect_all",
+  "base_model": "yolov8m.pt",
+  "final_weights": {
+    "path": "artifacts/final_model/weights/defect_yolov8m_1536_detect_all_best.pt",
+    "size_human": "50M",
+    "sha256": "54eaa874368e222e689dfeab88a0b3e6b3b6aee8ccba9418a7bdc6033d8ba173"
+  },
+  "classes": [
+    "ConvexPoint",
+    "ExposeWhite",
+    "FiberNep",
+    "FabricExposed"
+  ],
+  "raw_archives": [
+    "ConvexPoint.zip",
+    "ExposeWhite.zip",
+    "FiberNep.zip",
+    "FabricExposed.zip"
+  ],
+  "dataset_summary": {
+    "raw_total_images": 2952,
+    "prepared_split_counts": {
+      "train": 2065,
+      "val": 588,
+      "test": 299
+    },
+    "notes": [
+      "All provided images are defect images.",
+      "No clean images are included in the provided archives.",
+      "The dataset contains mixed-class images and is better treated as a detection task."
+    ]
+  },
+  "training_environment": {
+    "os": "Ubuntu",
+    "environment_manager": "conda",
+    "python": "3.10",
+    "pytorch_cuda_index": "https://download.pytorch.org/whl/cu128",
+    "dependencies": [
+      "ultralytics>=8.3.0",
+      "PyYAML>=6.0",
+      "Pillow>=10.0"
+    ],
+    "target_gpu": "NVIDIA GeForce RTX 5060 Ti 16 GB",
+    "target_driver": "580.126.09"
+  },
+  "training_config": {
+    "imgsz": 1536,
+    "epochs": 200,
+    "batch": 4,
+    "workers": 4,
+    "device": "0",
+    "seed": 42,
+    "patience": 60,
+    "amp": true
+  },
+  "augmentation_config": {
+    "target_classes": [
+      "FiberNep",
+      "FabricExposed"
+    ],
+    "crop_size": 1536,
+    "context_scale": 6.0,
+    "min_visible_fraction": 0.35,
+    "min_box_size_px": 6,
+    "copies_per_object": 2,
+    "jitter_ratio": 0.08
+  },
+  "metrics": {
+    "best_precision_b": {
+      "value": 0.729,
+      "epoch": 108
+    },
+    "best_recall_b": {
+      "value": 0.58531,
+      "epoch": 14
+    },
+    "best_map50_b": {
+      "value": 0.63379,
+      "epoch": 44
+    },
+    "best_map50_95_b": {
+      "value": 0.33113,
+      "epoch": 94
+    },
+    "image_level_test_report": {
+      "gt_mode": "source_package",
+      "pred_mode": "max_conf",
+      "total_images": 299,
+      "correct_images": 268,
+      "image_accuracy": 0.8963210702341137
+    }
+  }
+}
