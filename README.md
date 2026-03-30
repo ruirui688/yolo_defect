@@ -144,6 +144,12 @@ defect_project/
 
 - [训练环境与训练流程](./docs/TRAINING.md)
 
+当前已经公开整理的一份无缺陷测试集评估结果见：
+
+- [NoDefectTempSelect 评估报告](./docs/reports/NoDefectTempSelect/evaluation_report.md)
+- [NoDefectTempSelect 汇总 JSON](./docs/reports/NoDefectTempSelect/summary.json)
+- [NoDefectTempSelect 逐图 CSV](./docs/reports/NoDefectTempSelect/per_image_results.csv)
+
 ## 九、数据集名称与基本情况
 
 原始数据集不包含在本仓库中，但文档里保留了数据集名称和基本统计，便于别人理解你的训练来源。
@@ -195,6 +201,7 @@ conda activate defect-yolo
 - [GitHub 发布说明](./docs/PUBLISHING.md)
 - [最终模型说明](./artifacts/final_model/README.md)
 - [代码目录说明](./code/yolo_defect_framework/README.md)
+- [NoDefectTempSelect 评估报告](./docs/reports/NoDefectTempSelect/evaluation_report.md)
 
 ## 十二、GitHub 发布
 
@@ -203,4 +210,3 @@ conda activate defect-yolo
 发布步骤见：
 
 - [GitHub 发布说明](./docs/PUBLISHING.md)
-

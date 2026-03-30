@@ -310,6 +310,12 @@ python code/yolo_defect_framework/scripts/evaluate_no_defect_zip.py \
 - `false_positive_boxes_per_class`
   - 哪个类别最容易在无缺陷图上误报
 
+这次已经导出并整理到可提交目录的公开结果见：
+
+- [NoDefectTempSelect 评估报告](./reports/NoDefectTempSelect/evaluation_report.md)
+- [NoDefectTempSelect 汇总 JSON](./reports/NoDefectTempSelect/summary.json)
+- [NoDefectTempSelect 逐图 CSV](./reports/NoDefectTempSelect/per_image_results.csv)
+
 ## 十二、相关文档
 
 - [训练环境与训练流程](./TRAINING.md)

@@ -1,0 +1,337 @@
+{
+  "zip_path": "/home/rui/defect_project/raw_data/NoDefectTempSelect.zip",
+  "weights": "/home/rui/defect_project/artifacts/final_model/weights/defect_yolov8m_1536_detect_all_best.pt",
+  "output_dir": "/home/rui/defect_project/output/no_defect_eval/NoDefectTempSelect",
+  "config": {
+    "imgsz": 1280,
+    "device": "0",
+    "conf": 0.25,
+    "iou": 0.5,
+    "limit": 0,
+    "save_fp_images": true
+  },
+  "dataset": {
+    "total_images_in_zip": 1099,
+    "total_json_in_zip": 1099,
+    "evaluated_images": 1099,
+    "skipped_missing_json": 0,
+    "skipped_non_empty_json": 0
+  },
+  "metrics": {
+    "true_negative_images": 226,
+    "false_positive_images": 873,
+    "image_level_true_negative_rate": 0.20564149226569609,
+    "image_level_false_positive_rate": 0.7943585077343039,
+    "total_false_positive_boxes": 4111,
+    "false_positive_boxes_per_class": {
+      "ConvexPoint": 3568,
+      "ExposeWhite": 334,
+      "FabricExposed": 12,
+      "FiberNep": 197
+    },
+    "false_positive_images_per_class": {
+      "ConvexPoint": 770,
+      "ExposeWhite": 166,
+      "FabricExposed": 7,
+      "FiberNep": 119
+    },
+    "false_positive_box_confidence_stats": {
+      "min": 0.2501576542854309,
+      "mean": 0.6172275570325683,
+      "median": 0.6582002639770508,
+      "max": 0.9463498592376709
+    },
+    "false_positive_image_max_confidence_stats": {
+      "min": 0.25148072838783264,
+      "mean": 0.7296149773696035,
+      "median": 0.7831510305404663,
+      "max": 0.9463498592376709
+    }
+  },
+  "top_false_positive_images": [
+    {
+      "image_name": "NoDefectTempSelect_0073.bmp",
+      "num_detections": 17,
+      "max_confidence": 0.9463498592376709,
+      "predicted_classes": [
+        "ConvexPoint",
+        "FiberNep"
+      ],
+      "annotated_image": "NoDefectTempSelect_0073.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0079.bmp",
+      "num_detections": 10,
+      "max_confidence": 0.9337206482887268,
+      "predicted_classes": [
+        "ConvexPoint",
+        "FiberNep"
+      ],
+      "annotated_image": "NoDefectTempSelect_0079.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0975.bmp",
+      "num_detections": 1,
+      "max_confidence": 0.9317885637283325,
+      "predicted_classes": [
+        "ExposeWhite"
+      ],
+      "annotated_image": "NoDefectTempSelect_0975.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0728.bmp",
+      "num_detections": 9,
+      "max_confidence": 0.923028826713562,
+      "predicted_classes": [
+        "ConvexPoint",
+        "FiberNep"
+      ],
+      "annotated_image": "NoDefectTempSelect_0728.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0712.bmp",
+      "num_detections": 7,
+      "max_confidence": 0.91976398229599,
+      "predicted_classes": [
+        "ConvexPoint",
+        "ExposeWhite",
+        "FiberNep"
+      ],
+      "annotated_image": "NoDefectTempSelect_0712.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0735.bmp",
+      "num_detections": 4,
+      "max_confidence": 0.9123779535293579,
+      "predicted_classes": [
+        "ExposeWhite",
+        "FiberNep"
+      ],
+      "annotated_image": "NoDefectTempSelect_0735.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0277.bmp",
+      "num_detections": 4,
+      "max_confidence": 0.9111624360084534,
+      "predicted_classes": [
+        "ExposeWhite",
+        "FiberNep"
+      ],
+      "annotated_image": "NoDefectTempSelect_0277.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0400.bmp",
+      "num_detections": 17,
+      "max_confidence": 0.9093436598777771,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0400.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0242.bmp",
+      "num_detections": 7,
+      "max_confidence": 0.9084155559539795,
+      "predicted_classes": [
+        "ExposeWhite",
+        "FiberNep"
+      ],
+      "annotated_image": "NoDefectTempSelect_0242.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0680.bmp",
+      "num_detections": 5,
+      "max_confidence": 0.9037812352180481,
+      "predicted_classes": [
+        "ConvexPoint",
+        "ExposeWhite"
+      ],
+      "annotated_image": "NoDefectTempSelect_0680.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0115.bmp",
+      "num_detections": 5,
+      "max_confidence": 0.8997058272361755,
+      "predicted_classes": [
+        "ExposeWhite",
+        "FiberNep"
+      ],
+      "annotated_image": "NoDefectTempSelect_0115.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0962.bmp",
+      "num_detections": 3,
+      "max_confidence": 0.8978760242462158,
+      "predicted_classes": [
+        "ConvexPoint",
+        "ExposeWhite"
+      ],
+      "annotated_image": "NoDefectTempSelect_0962.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0566.bmp",
+      "num_detections": 20,
+      "max_confidence": 0.897386372089386,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0566.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0431.bmp",
+      "num_detections": 16,
+      "max_confidence": 0.8968318104743958,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0431.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0182.bmp",
+      "num_detections": 4,
+      "max_confidence": 0.8946831226348877,
+      "predicted_classes": [
+        "ExposeWhite"
+      ],
+      "annotated_image": "NoDefectTempSelect_0182.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0037.bmp",
+      "num_detections": 7,
+      "max_confidence": 0.8945470452308655,
+      "predicted_classes": [
+        "ConvexPoint",
+        "ExposeWhite",
+        "FiberNep"
+      ],
+      "annotated_image": "NoDefectTempSelect_0037.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0001.bmp",
+      "num_detections": 5,
+      "max_confidence": 0.8940489292144775,
+      "predicted_classes": [
+        "ExposeWhite"
+      ],
+      "annotated_image": "NoDefectTempSelect_0001.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0600.bmp",
+      "num_detections": 15,
+      "max_confidence": 0.8939813375473022,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0600.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0469.bmp",
+      "num_detections": 13,
+      "max_confidence": 0.8935139179229736,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0469.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0921.bmp",
+      "num_detections": 11,
+      "max_confidence": 0.8930146098136902,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0921.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_1019.bmp",
+      "num_detections": 5,
+      "max_confidence": 0.8928568363189697,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_1019.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0883.bmp",
+      "num_detections": 9,
+      "max_confidence": 0.8918821215629578,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0883.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0741.bmp",
+      "num_detections": 5,
+      "max_confidence": 0.891609787940979,
+      "predicted_classes": [
+        "ExposeWhite"
+      ],
+      "annotated_image": "NoDefectTempSelect_0741.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0066.bmp",
+      "num_detections": 11,
+      "max_confidence": 0.8910003304481506,
+      "predicted_classes": [
+        "ConvexPoint",
+        "ExposeWhite"
+      ],
+      "annotated_image": "NoDefectTempSelect_0066.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0492.bmp",
+      "num_detections": 10,
+      "max_confidence": 0.8897542953491211,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0492.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0412.bmp",
+      "num_detections": 11,
+      "max_confidence": 0.8896268010139465,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0412.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0798.bmp",
+      "num_detections": 6,
+      "max_confidence": 0.8890241384506226,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0798.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0952.bmp",
+      "num_detections": 12,
+      "max_confidence": 0.8886748552322388,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0952.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0290.bmp",
+      "num_detections": 25,
+      "max_confidence": 0.8876972794532776,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0290.jpg"
+    },
+    {
+      "image_name": "NoDefectTempSelect_0958.bmp",
+      "num_detections": 7,
+      "max_confidence": 0.8872792720794678,
+      "predicted_classes": [
+        "ConvexPoint"
+      ],
+      "annotated_image": "NoDefectTempSelect_0958.jpg"
+    }
+  ]
+}
