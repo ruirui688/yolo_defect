@@ -1,27 +1,82 @@
-# Defect Detection YOLO Project
+# 织物缺陷检测 YOLO 项目
 
-This repository contains a 4-class fabric defect detection project built with Ultralytics YOLO.
+这是一个基于 Ultralytics YOLO 的 4 类织物缺陷检测项目仓库。仓库中已经整理好了训练脚本、环境说明、训练好的最终模型，以及发布到 GitHub 所需的文档。
 
-The repository is organized for GitHub publishing:
+这个仓库支持两种典型使用方式：
 
-- source code and training scripts are kept under `code/yolo_defect_framework`
-- the final trained model is collected under `artifacts/final_model`
-- raw datasets and generated datasets are excluded from version control
+1. 你已经有训练好的模型，只想拿它去检测自己的样本。
+2. 你希望按完整流程复现数据准备、增强、训练和评估。
 
-## Project Overview
+## 一、项目目标
 
-- Task type: object detection
-- Framework: Ultralytics YOLO
-- Classes:
-  - `ConvexPoint`
-  - `ExposeWhite`
-  - `FiberNep`
-  - `FabricExposed`
-- Business goal: detect all defect boxes and defect classes in each image
+本项目的任务类型是目标检测，不是单标签图像分类。
 
-This project uses a detection-first training strategy. It keeps all labeled boxes in each image instead of forcing the problem into single-label image classification.
+缺陷类别共 4 类：
 
-## Repository Layout
+- `ConvexPoint`
+- `ExposeWhite`
+- `FiberNep`
+- `FabricExposed`
+
+业务目标是：
+
+- 输入一张样本图像
+- 输出图中的全部缺陷框
+- 输出每个缺陷框对应的缺陷类别
+
+由于原始数据中存在大量“一张图里有多个缺陷类别”的情况，所以本项目采用 detection-first 的训练思路，即保留每张图中的全部标注框，而不是强行把每张图压成单个类别标签。
+
+## 二、如果你只想直接使用训练好的模型
+
+如果你只是想拿仓库里的最终模型去检测自己的样本，你不需要准备训练数据集，也不需要执行训练流程。你只需要：
+
+1. 安装 `conda`
+2. 创建运行环境
+3. 使用最终模型执行推理
+4. 查看标注后的结果图和检测结果 JSON / CSV
+
+请直接看这两份文档：
+
+- [推理与结果查看说明](./docs/INFERENCE.md)
+- [最终模型说明](./artifacts/final_model/README.md)
+
+## 三、如果你想复现训练流程
+
+如果你希望从原始 zip 数据重新训练模型，请按下面的顺序阅读：
+
+1. [数据集说明](./docs/DATASET.md)
+2. [训练环境与训练流程](./docs/TRAINING.md)
+3. [代码目录说明](./code/yolo_defect_framework/README.md)
+
+## 四、仓库里包含什么
+
+当前仓库会被纳入 Git 管理并用于 GitHub 发布的内容包括：
+
+- 训练脚本
+- 配置文件
+- 环境安装脚本
+- 最终训练好的模型
+- 中文数据说明文档
+- 中文训练说明文档
+- 中文推理说明文档
+- GitHub 发布说明文档
+
+## 五、仓库里不包含什么
+
+下面这些内容不会提交到 GitHub：
+
+- 原始数据压缩包 `raw_data/`
+- 生成后的训练数据集 `output/dataset/`
+- 本地训练中间结果 `code/yolo_defect_framework/runs/`
+- 本地下载的基础预训练权重 `yolov8m.pt`、`yolo26n.pt`
+
+这样做的目的是：
+
+- 避免把原始数据公开
+- 避免仓库体积过大
+- 保留完整的工程、训练方法和最终模型
+
+## 六、项目目录结构
 
 ```text
 defect_project/
@@ -35,6 +90,7 @@ defect_project/
   code/
     yolo_defect_framework/
       configs/
+      reports/
       scripts/
       README.md
       environment.yml
@@ -44,105 +100,107 @@ defect_project/
       run_augment.sh
       run_train.sh
       run_evaluate.sh
+      run_infer.sh
   docs/
     DATASET.md
-    TRAINING.md
+    INFERENCE.md
     PUBLISHING.md
+    TRAINING.md
 ```
 
-## Included In This Repository
+## 七、最终模型说明
 
-- training scripts
-- config files
-- environment setup script
-- final trained model
-- training and evaluation documentation
+本仓库已经包含最终训练好的模型：
 
-## Not Included In This Repository
+- 模型文件：
+  - `artifacts/final_model/weights/defect_yolov8m_1536_detect_all_best.pt`
+- 文件大小：
+  - 约 `50 MB`
+- 对应训练运行名：
+  - `defect_yolov8m_1536_detect_all`
+- 基础模型：
+  - `yolov8m.pt`
 
-- raw zip datasets
-- generated YOLO dataset under `output/dataset`
-- intermediate checkpoints and local training cache
+模型元数据见：
 
-See [docs/DATASET.md](docs/DATASET.md) for dataset names, counts, and structure.
+- [最终模型说明](./artifacts/final_model/README.md)
+- [模型摘要 JSON](./artifacts/final_model/metadata/model_summary.json)
 
-## Final Model
+## 八、当前训练结果概览
 
-- Final weight file: `artifacts/final_model/weights/defect_yolov8m_1536_detect_all_best.pt`
-- Size: about 50 MB
-- Training run name: `defect_yolov8m_1536_detect_all`
-- Base model: `yolov8m.pt`
+当前保存的训练结果中，核心检测指标如下：
 
-Supporting metadata is stored in:
+- 最佳 `mAP50(B)`：`0.63379`
+- 最佳 `mAP50-95(B)`：`0.33113`
+- 图像级聚合测试准确率：`89.63%`
 
-- [artifacts/final_model/README.md](artifacts/final_model/README.md)
-- [artifacts/final_model/metadata/model_summary.json](artifacts/final_model/metadata/model_summary.json)
+需要注意：
 
-## Training Environment
+- 上面的 `89.63%` 是图像级聚合结果，只能作为辅助参考
+- 本项目真正的主任务仍然是目标检测
+- 最终交付物应理解为“缺陷检测模型”，不是“单标签分类器”
 
-- OS: Ubuntu
-- Environment manager: conda
-- Python: 3.10
-- PyTorch: installed from the CUDA 12.8 wheel index
-- Main dependencies:
-  - `ultralytics>=8.3.0`
-  - `PyYAML>=6.0`
-  - `Pillow>=10.0`
-- Target GPU in the original setup:
-  - NVIDIA GeForce RTX 5060 Ti 16 GB
-  - NVIDIA driver `580.126.09`
+更完整的训练方法和结果解释见：
 
-See [docs/TRAINING.md](docs/TRAINING.md) for the full training method and current results.
+- [训练环境与训练流程](./docs/TRAINING.md)
 
-## Quick Start
+## 九、数据集名称与基本情况
 
-Create the environment:
+原始数据集不包含在本仓库中，但文档里保留了数据集名称和基本统计，便于别人理解你的训练来源。
 
-```bash
-cd code/yolo_defect_framework
-chmod +x setup_env.sh run_prepare.sh run_augment.sh run_train.sh run_evaluate.sh
-./setup_env.sh defect-yolo
-conda activate defect-yolo
-```
-
-Run inference with the final model:
-
-```bash
-python code/yolo_defect_framework/scripts/infer_image.py \
-  --weights artifacts/final_model/weights/defect_yolov8m_1536_detect_all_best.pt \
-  --image /path/to/test.bmp \
-  --save-annotated ./infer_result.bmp
-```
-
-## Training Pipeline
-
-1. Prepare the dataset from four raw zip archives.
-2. Generate offline augmentations for weak classes.
-3. Train YOLO detection.
-4. Evaluate both detection metrics and image-level aggregation metrics.
-
-The detailed pipeline and hyperparameters are documented in [docs/TRAINING.md](docs/TRAINING.md).
-
-## Dataset Summary
-
-The raw dataset is not committed to this repository. The original archive names are:
+原始压缩包名称如下：
 
 - `ConvexPoint.zip`
 - `ExposeWhite.zip`
 - `FiberNep.zip`
 - `FabricExposed.zip`
 
-Known characteristics of the data:
+已知数据特点：
 
-- total raw images: `2952`
-- all images are defect samples
-- there are no clean or normal images in the provided archives
-- some archives contain mixed-class images, so this is better treated as a detection task than a pure classification task
+- 原始总图像数：`2952`
+- 提供的数据全部都是缺陷图
+- 原始数据中没有正常样本 / 无缺陷样本
+- 部分图片同时包含多个缺陷类别
 
-## Publishing Notes
+详细说明见：
 
-This repository is prepared for GitHub publishing and is already initialized as a local git repository.
+- [数据集说明](./docs/DATASET.md)
+- [数据集结构分析报告](./code/yolo_defect_framework/reports/dataset_architecture_report.md)
 
-Suggested next step:
+## 十、最常用的两个入口
 
-- follow [docs/PUBLISHING.md](docs/PUBLISHING.md) to create the first commit and push to GitHub
+### 1. 直接检测自己的样本
+
+```bash
+cd code/yolo_defect_framework
+./run_infer.sh /path/to/your_images ./../../inference_output
+```
+
+### 2. 重新训练模型
+
+```bash
+cd code/yolo_defect_framework
+./setup_env.sh defect-yolo
+conda activate defect-yolo
+./run_prepare.sh /path/to/raw_data ./../../output/dataset
+./run_augment.sh ./../../output/dataset ./configs/augment_config.yaml
+./run_train.sh ./../../output/dataset ./configs/train_config.yaml
+```
+
+## 十一、文档导航
+
+- [数据集说明](./docs/DATASET.md)
+- [训练环境与训练流程](./docs/TRAINING.md)
+- [推理与结果查看说明](./docs/INFERENCE.md)
+- [GitHub 发布说明](./docs/PUBLISHING.md)
+- [最终模型说明](./artifacts/final_model/README.md)
+- [代码目录说明](./code/yolo_defect_framework/README.md)
+
+## 十二、GitHub 发布
+
+当前目录已经初始化为本地 Git 仓库，并已切换到 `main` 分支。后续你只需要提交并绑定 GitHub 远端即可。
+
+发布步骤见：
+
+- [GitHub 发布说明](./docs/PUBLISHING.md)
+

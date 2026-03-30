@@ -26,6 +26,7 @@ env/
 # Raw data and generated datasets
 raw_data/
 output/
+inference_output/
 
 # Local training outputs and downloaded base weights
 code/yolo_defect_framework/runs/
@@ -34,4 +35,3 @@ code/yolo_defect_framework/*.pt
 
 # Logs
 *.log
-

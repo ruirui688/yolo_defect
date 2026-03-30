@@ -1,163 +1,131 @@
-# YOLO Defect Framework
+# yolo_defect_framework 代码目录说明
 
-This project is scaffolded for a 4-class defect-detection task built on YOLO. It assumes:
+这个目录是项目的核心代码目录，包含训练、评估、推理、环境安装和数据准备所需的脚本。
 
-- all provided raw images are defect samples
-- the four classes are `ConvexPoint`, `ExposeWhite`, `FiberNep`, and `FabricExposed`
-- the final business output is all defect boxes and classes in each image
+如果你是第一次接触这个仓库，建议先看仓库根目录的：
 
-The training architecture is now detection-first. It keeps every labeled box, trains on all defects in an image, and adds offline augmentation focused on weak classes such as `FiberNep` and `FabricExposed`.
+- [项目总览](../../README.md)
+- [训练环境与训练流程](../../docs/TRAINING.md)
+- [推理与结果查看说明](../../docs/INFERENCE.md)
 
-## Recommended environment
+## 一、目录作用
 
-Target machine:
+这个目录主要负责：
 
-- Ubuntu
-- `conda` environment
-- NVIDIA GeForce RTX 5060 Ti 16 GB
-- NVIDIA driver `580.126.09`
+- 创建训练环境
+- 从原始 zip 数据准备 YOLO 数据集
+- 对弱类生成离线增强样本
+- 训练 YOLO 检测模型
+- 评估模型
+- 对单张或一批图片做推理
 
-The environment setup here uses:
+## 二、主要文件说明
 
-- `Python 3.10`
-- `PyTorch` installed from the official `cu128` wheel index
-- `Ultralytics YOLO`
+### 配置文件
 
-This is a pragmatic fit for your GPU and current Linux setup.
+- `configs/train_config.yaml`
+  - 训练配置
+- `configs/augment_config.yaml`
+  - 弱类增强配置
 
-## Project layout
+### 核心脚本
 
-```text
-yolo_defect_framework/
-  configs/
-    train_config.yaml
-  scripts/
-    augment_train_split.py
-    common.py
-    prepare_dataset.py
-    train.py
-    evaluate.py
-    infer_image.py
-    export_model.py
-    verify_env.py
-  environment.yml
-  requirements.txt
-  setup_env.sh
-  run_augment.sh
-  run_prepare.sh
-  run_train.sh
-  run_evaluate.sh
-```
+- `scripts/common.py`
+  - 公共常量和工具函数
+- `scripts/prepare_dataset.py`
+  - 从 4 个原始 zip 包生成训练数据集
+- `scripts/augment_train_split.py`
+  - 对训练集中的弱类做离线增强
+- `scripts/train.py`
+  - 启动 YOLO 训练
+- `scripts/evaluate.py`
+  - 生成图像级聚合评估结果
+- `scripts/infer_image.py`
+  - 对单张图片做推理
+- `scripts/infer_directory.py`
+  - 对图片目录做批量推理并输出汇总结果
+- `scripts/export_model.py`
+  - 导出 ONNX / engine 模型
+- `scripts/verify_env.py`
+  - 检查当前 Python / CUDA / YOLO 环境是否可用
 
-## Quick start on Ubuntu with conda
+### 包装脚本
 
-1. Copy this folder to the training machine.
-2. Put the 4 raw zip files in one directory such as `/data/defect_raw`.
-3. Open a terminal in the project root.
-4. Create the conda environment and install GPU packages:
+- `setup_env.sh`
+  - 创建并安装 Ubuntu + conda 环境
+- `run_prepare.sh`
+  - 数据准备包装脚本
+- `run_augment.sh`
+  - 数据增强包装脚本
+- `run_train.sh`
+  - 训练包装脚本
+- `run_evaluate.sh`
+  - 评估包装脚本
+- `run_infer.sh`
+  - 批量推理包装脚本
+
+### 其他文件
+
+- `environment.yml`
+  - conda 环境定义
+- `requirements.txt`
+  - Python 依赖
+- `reports/dataset_architecture_report.md`
+  - 原始数据结构分析报告
+
+## 三、最常用命令
+
+### 1. 创建环境
 
 ```bash
-chmod +x setup_env.sh run_prepare.sh run_augment.sh run_train.sh run_evaluate.sh
+cd /home/rui/defect_project/code/yolo_defect_framework
 ./setup_env.sh defect-yolo
-```
-
-5. Activate the environment:
-
-```bash
 conda activate defect-yolo
 ```
 
-6. Prepare the dataset:
+### 2. 准备数据
 
 ```bash
-./run_prepare.sh /data/defect_raw ./dataset
+./run_prepare.sh /home/rui/defect_project/raw_data /home/rui/defect_project/output/dataset
 ```
 
-7. Generate weak-class augmentations on the train split:
+### 3. 执行弱类增强
 
 ```bash
-./run_augment.sh ./dataset ./configs/augment_config.yaml
+./run_augment.sh /home/rui/defect_project/output/dataset ./configs/augment_config.yaml
 ```
 
-8. Start training:
+### 4. 训练模型
 
 ```bash
-./run_train.sh ./dataset ./configs/train_config.yaml
+./run_train.sh /home/rui/defect_project/output/dataset ./configs/train_config.yaml
 ```
 
-9. Evaluate detection and image-level outputs:
+### 5. 评估模型
 
 ```bash
-./run_evaluate.sh ./runs/detect/runs/defect_yolov8m_1536_detect_all/weights/best.pt ./dataset
+./run_evaluate.sh \
+  /home/rui/defect_project/artifacts/final_model/weights/defect_yolov8m_1536_detect_all_best.pt \
+  /home/rui/defect_project/output/dataset
 ```
 
-## Direct commands
-
-Prepare dataset:
+### 6. 批量检测自己的样本
 
 ```bash
-python ./scripts/prepare_dataset.py --raw-dir /data/defect_raw --output-dir ./dataset
+./run_infer.sh /path/to/your_images /home/rui/defect_project/inference_output
 ```
 
-Generate weak-class augmentations:
+## 四、当前推荐的阅读顺序
 
-```bash
-python ./scripts/augment_train_split.py --dataset-root ./dataset --config ./configs/augment_config.yaml
-```
+如果你要训练：
 
-Train:
+1. [训练环境与训练流程](../../docs/TRAINING.md)
+2. [数据集说明](../../docs/DATASET.md)
+3. 本文件
 
-```bash
-python ./scripts/train.py --config ./configs/train_config.yaml --data ./dataset/data.yaml
-```
+如果你只想推理：
 
-Evaluate image-level accuracy:
+1. [最终模型说明](../../artifacts/final_model/README.md)
+2. [推理与结果查看说明](../../docs/INFERENCE.md)
+3. 本文件
 
-```bash
-python ./scripts/evaluate.py --weights ./runs/detect/runs/defect_yolov8m_1536_detect_all/weights/best.pt --dataset-root ./dataset --split test --gt-mode largest_area --pred-mode area_conf
-```
-
-Infer a single image:
-
-```bash
-python ./scripts/infer_image.py --weights ./runs/detect/runs/defect_yolov8m_1536_detect_all/weights/best.pt --image /data/test.bmp --save-annotated ./outputs/infer.bmp
-```
-
-Export ONNX:
-
-```bash
-python ./scripts/export_model.py --weights ./runs/detect/runs/defect_yolov8m_1536_detect_all/weights/best.pt --format onnx
-```
-
-Check GPU environment:
-
-```bash
-python ./scripts/verify_env.py
-```
-
-## Notes on labels
-
-The dataset preparation script stores three image-level label interpretations in `dataset/metadata/manifest.csv`:
-
-- `primary_by_source`: uses the original archive name as the image label
-- `primary_by_count`: uses the class with the most boxes in the image
-- `primary_by_area`: uses the class with the largest total labeled area in the image
-
-For pure detection training, all box labels are kept as-is. The image-level fields in `manifest.csv` are only helper metadata for later reporting.
-
-## Recommended first run
-
-- model: `yolov8m.pt`
-- image size: `1536`
-- epochs: `200`
-- batch: `4`
-- workers: `4` to start
-- generate targeted train augmentations before training
-- final business metric: per-class detection recall/precision/mAP, especially `FiberNep` and `FabricExposed`
-
-## Practical notes for your GPU
-
-- With a 16 GB RTX 5060 Ti, this repo now starts at `batch=4` for `imgsz=1536`.
-- If you hit CUDA OOM, reduce `imgsz` to `1280` before reducing model size.
-- If recall is still weak on small defects after the second run, increase `copies_per_object` in `configs/augment_config.yaml`.
-- If you need better deployment speed later, export ONNX first, then move to TensorRT.
