@@ -3,21 +3,31 @@
 Thumbs.db
 .idea/
 .vscode/
+*.swp
+*.swo
+*~
+*.bak
+*.orig
 
 # Python caches and virtual environments
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+.python-version
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 .nox/
 .tox/
+.coverage
+coverage/
+htmlcov/
 .venv/
 venv/
 env/
 .ipynb_checkpoints/
+.cache/
 
 # Local secrets and environment files
 .env
@@ -27,11 +37,17 @@ env/
 raw_data/
 output/
 inference_output/
+tmp/
+temp/
 
 # Local training outputs and downloaded base weights
+runs/
 code/yolo_defect_framework/runs/
 code/yolo_defect_framework/*.pt
 *.cache
+wandb/
+mlruns/
 
 # Logs
 *.log
+nohup.out

@@ -40,6 +40,8 @@
   - 启动 YOLO 训练
 - `scripts/evaluate.py`
   - 生成图像级聚合评估结果
+- `scripts/evaluate_no_defect_zip.py`
+  - 在无缺陷 zip 测试集上评估模型误检情况
 - `scripts/infer_image.py`
   - 对单张图片做推理
 - `scripts/infer_directory.py`
@@ -61,6 +63,8 @@
   - 训练包装脚本
 - `run_evaluate.sh`
   - 评估包装脚本
+- `run_evaluate_no_defect.sh`
+  - 无缺陷测试集评估包装脚本
 - `run_infer.sh`
   - 批量推理包装脚本
 
@@ -115,6 +119,15 @@ conda activate defect-yolo
 ./run_infer.sh /path/to/your_images /home/rui/defect_project/inference_output
 ```
 
+### 7. 评估无缺陷测试集的误检情况
+
+```bash
+./run_evaluate_no_defect.sh \
+  /home/rui/defect_project/raw_data/NoDefectTempSelect.zip \
+  /home/rui/defect_project/output/no_defect_eval/NoDefectTempSelect \
+  /home/rui/defect_project/artifacts/final_model/weights/defect_yolov8m_1536_detect_all_best.pt
+```
+
 ## 四、当前推荐的阅读顺序
 
 如果你要训练：
@@ -128,4 +141,3 @@ conda activate defect-yolo
 1. [最终模型说明](../../artifacts/final_model/README.md)
 2. [推理与结果查看说明](../../docs/INFERENCE.md)
 3. 本文件
-

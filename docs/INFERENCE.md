@@ -255,9 +255,63 @@ python code/yolo_defect_framework/scripts/infer_directory.py \
   --output-dir ./inference_output
 ```
 
-## 十一、相关文档
+## 十一、评估无缺陷测试集
+
+如果你手里有一套“理论上不应该检出任何缺陷”的测试集，可以直接评估模型的误检情况。
+
+本项目已经提供了针对 zip 数据集的负样本评估脚本，适用于类似下面这种结构：
+
+- zip 中包含图片
+- zip 中包含同名 LabelMe JSON
+- JSON 里的 `shapes` 为空数组，表示该图无缺陷
+
+例如当前这套测试集：
+
+```text
+/home/rui/defect_project/raw_data/NoDefectTempSelect.zip
+```
+
+### 用包装脚本
+
+```bash
+cd /home/rui/defect_project/code/yolo_defect_framework
+./run_evaluate_no_defect.sh \
+  /home/rui/defect_project/raw_data/NoDefectTempSelect.zip \
+  /home/rui/defect_project/output/no_defect_eval/NoDefectTempSelect \
+  /home/rui/defect_project/artifacts/final_model/weights/defect_yolov8m_1536_detect_all_best.pt
+```
+
+### 直接用 Python
+
+```bash
+cd /home/rui/defect_project
+python code/yolo_defect_framework/scripts/evaluate_no_defect_zip.py \
+  --weights artifacts/final_model/weights/defect_yolov8m_1536_detect_all_best.pt \
+  --zip-path raw_data/NoDefectTempSelect.zip \
+  --output-dir output/no_defect_eval/NoDefectTempSelect \
+  --save-fp-images
+```
+
+脚本会输出：
+
+- `summary.json`
+  - 汇总误检率、误检框数量、各类别误检统计
+- `per_image_results.csv`
+  - 每张图是否误检、误检了几个框、最大置信度是多少
+- `false_positive_details/`
+  - 每张误检图片的详细 JSON
+- `false_positive_images/`
+  - 如果启用了 `--save-fp-images`，这里会保存误检图的带框结果
+
+你可以重点关注两个指标：
+
+- `image_level_false_positive_rate`
+  - 无缺陷图片里，有多少比例被误检
+- `false_positive_boxes_per_class`
+  - 哪个类别最容易在无缺陷图上误报
+
+## 十二、相关文档
 
 - [训练环境与训练流程](./TRAINING.md)
 - [最终模型说明](../artifacts/final_model/README.md)
 - [项目总览](../README.md)
-
